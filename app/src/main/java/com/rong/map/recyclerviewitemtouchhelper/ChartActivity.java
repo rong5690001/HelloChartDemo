@@ -2,11 +2,13 @@ package com.rong.map.recyclerviewitemtouchhelper;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -25,49 +27,113 @@ public class ChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
         initView();
-        setData();
+        setData2();
     }
 
     private void initView() {
         mChart = (LineChartView) findViewById(R.id.chart);
-//        mChart.setInteractive(false);
+        mChart.setInteractive(true);
         mChart.setZoomEnabled(true);
-        mChart.setMaxZoom(1.5f);
+//        mChart.setMaxZoom(1.5f);
         mChart.setScrollEnabled(true);
         mChart.setValueSelectionEnabled(true);
         Viewport v = new Viewport(mChart.getMaximumViewport());
         v.left = 0;
-        v.right= 1;
+        v.right= 14;
+        v.bottom = 10;
+        v.top = 100;
         mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);
-        mChart.startDataAnimation();
+        mChart.setViewportCalculationEnabled(false);//注意要固定坐標，這個一定要設置
     }
 
+    private void setData2(){
+//        String[] x = new String[] {"1/2\n2016","1/2","1/2","1/2","1/2","1/2"};
+        String[] y = new String[] {"48","49","50"};
+        List<PointValue> values = new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+            values.add(new PointValue(i, 0));
+        }
+
+//        values.add(new PointValue(1f, 3f));
+//        values.add(new PointValue(2f, 3f));
+//        values.add(new PointValue(3f, 1f));
+//        values.add(new PointValue(4f, 3f));
+        Line line = new Line(values).setColor(Color.parseColor("#f9c614")).setCubic(true);
+        line.setFilled(true);//区域填充
+        line.setPointRadius(3);
+//        line.setHasGradientToTransparent();//渐变
+        line.setPointColor(Color.parseColor("#f9c614"));
+//        line.setPathEffect();
+        line.setStrokeWidth(2);
+        line.setHasLabels(true);
+        List<Line> lines = new ArrayList<>();
+        lines.add(line);
+        data = new LineChartData();
+//        data.setBaseValue(48);
+        data.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        data.setLines(lines);
+        List<AxisValue> axisValuesX = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            AxisValue axisValue = new AxisValue(i);
+//            axisValue.setLabel("1/" + i);
+            axisValuesX.add(axisValue);
+        }
+        data.setAxisXBottom(new Axis(axisValuesX));
+//        List<AxisValue> axisValuesY = new ArrayList<>();
+//        for (int i = 0; i < values.size(); i++) {
+//            AxisValue axisValue = new AxisValue(i * 10);
+////            axisValue.setLabel(y[i]);
+//            axisValuesY.add(axisValue);
+//        }
+        Axis axisY = Axis.generateAxisFromRange(20f, 100f, 10f)
+//        Axis axisY = new Axis(axisValuesY)
+                .setHasLines(true)
+                .setHasSeparationLine(true);
+        data.setAxisYLeft(axisY);
+        mChart.setLineChartData(data);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                prepareDataAnimation();
+                mChart.startDataAnimation(2000);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mChart.setZoomLevelWithAnimation(6, 0, 2);
+                        mChart.setZoomType(ZoomType.HORIZONTAL);
+                    }
+                }, 2500);
+            }
+        }, 500);
+    }
+    LineChartData data;
     private void setData() {
         List<PointValue> values = new ArrayList<PointValue>();
         values.add(new PointValue(0f, 48.1f));
-        values.add(new PointValue(1f, 49.3f));
+//        values.add(new PointValue(1f, 49.3f));
         values.add(new PointValue(2f, 48.3f));
-        values.add(new PointValue(3f, 47.1f));
+//        values.add(new PointValue(3f, 47.1f));
         values.add(new PointValue(4f, 48.1f));
-        values.add(new PointValue(5f, 46.1f));
-        values.add(new PointValue(6f, 45.1f));
-        values.add(new PointValue(7f, 46.1f));
+//        values.add(new PointValue(5f, 46.1f));
+//        values.add(new PointValue(6f, 45.1f));
+//        values.add(new PointValue(7f, 46.1f));
         values.add(new PointValue(8f, 48.1f));
-        values.add(new PointValue(9f, 45.1f));
-        values.add(new PointValue(10f, 46.1f));
-        values.add(new PointValue(11f, 49.1f));
+//        values.add(new PointValue(9f, 45.1f));
+//        values.add(new PointValue(10f, 46.1f));
+//        values.add(new PointValue(11f, 49.1f));
         values.add(new PointValue(12f, 48.1f));
-        values.add(new PointValue(13f, 49.3f));
-        values.add(new PointValue(14f, 48.3f));
-        values.add(new PointValue(15f, 47.1f));
+//        values.add(new PointValue(13f, 49.3f));
+//        values.add(new PointValue(14f, 48.3f));
+//        values.add(new PointValue(15f, 47.1f));
         values.add(new PointValue(16f, 48.1f));
-        values.add(new PointValue(17f, 46.1f));
-        values.add(new PointValue(18f, 45.1f));
+//        values.add(new PointValue(17f, 46.1f));
+//        values.add(new PointValue(18f, 45.1f));
         values.add(new PointValue(19f, 46.1f));
-        values.add(new PointValue(20f, 48.1f));
-        values.add(new PointValue(21f, 45.1f));
-        values.add(new PointValue(22f, 46.1f));
+//        values.add(new PointValue(20f, 48.1f));
+//        values.add(new PointValue(21f, 45.1f));
+//        values.add(new PointValue(22f, 46.1f));
         values.add(new PointValue(23f, 49.1f));
 
         //In most cased you can call data model methods in builder-pattern-like manner.
@@ -81,7 +147,7 @@ public class ChartActivity extends AppCompatActivity {
         List<Line> lines = new ArrayList<>();
         lines.add(line);
 
-        LineChartData data = new LineChartData();
+        data = new LineChartData();
 //        data.setBaseValue(48);
         data.setLines(lines);
 
@@ -114,14 +180,14 @@ public class ChartActivity extends AppCompatActivity {
         axisBottom.setValues(axisAutoValues);
 //        axisBottom.setAutoGenerated(true);
 //        axisBottom.setLineColor(Color.parseColor("#d8d8d8"));
-        axisBottom.setMaxLabelChars(7);
-//        axisBottom.setHasTiltedLabels(true);
+//        axisBottom.setMaxLabelChars(7);
 //        axisBottom.setHasLines(true);
 //        axisBottom.setHasTiltedLabels(true);
         axisBottom.setLineColor(Color.parseColor("#e7e7e7"));
         data.setAxisXBottom(axisBottom);
-        Axis axisLeft = Axis.generateAxisFromRange(40f, 51f, 1f);
-//        axisLeft.setAutoGenerated(true);
+//        Axis axisLeft = Axis.generateAxisFromRange(40f, 51f, 1f);
+        Axis axisLeft = new Axis();
+        axisLeft.setAutoGenerated(true);
 //        List<AxisValue> axisValuesLeft = new ArrayList<>();
 //        axisValuesLeft.add(new AxisValue(0f));
 //        axisValuesLeft.add(new AxisValue(48f));
@@ -135,5 +201,25 @@ public class ChartActivity extends AppCompatActivity {
 //        mChart.startDataAnimation(2000);
         mChart.setLineChartData(data);
 //        mChart.setValueTouchEnabled(false);
+    }
+
+    /**
+     * To animate values you have to change targets values and then call {@link Chart#startDataAnimation()}
+     * method(don't confuse with View.animate()). If you operate on data that was set before you don't have to call
+     * {@link LineChartView#setLineChartData(LineChartData)} again.
+     */
+    private void prepareDataAnimation() {
+        int i = 0;
+        for (Line line : data.getLines()) {
+            for (PointValue value : line.getValues()) {
+                // Here I modify target only for Y values but it is OK to modify X targets as well.
+                float y = (float) Math.random() * 100;
+                y = Math.max(y, 30f);
+                value.setTarget(value.getX(), y);
+//                value.setLabel(String.valueOf(y));
+                value.setLabel(String.valueOf(value.getX()));
+                i++;
+            }
+        }
     }
 }
