@@ -81,7 +81,8 @@ public class ChartActivity extends AppCompatActivity {
         Axis axisY = Axis.generateAxisFromRange(20f, 100f, 10f)
 //        Axis axisY = new Axis(axisValuesY)
                 .setHasLines(true)
-                .setPathEffect(new DashPathEffect(new float[] { 8, 10, 8, 10}, 20));
+                .setLineColor(Color.BLACK)
+                .setPathEffect(new DashPathEffect(new float[] { 10, 10}, 0));
 //                .setHasSeparationLine(true);
         data.setAxisYLeft(axisY);
         mChart.setLineChartData(data);

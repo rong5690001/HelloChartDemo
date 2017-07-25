@@ -2,6 +2,7 @@ package com.rong.map.linechartview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -50,7 +51,11 @@ public class LineChartRenderer extends AbstractChartRenderer {
         linePaint.setStrokeWidth(ChartUtils.dp2px(density, DEFAULT_LINE_STROKE_WIDTH_DP));
 
         pointPaint.setAntiAlias(true);
+//        pointPaint.setStrokeWidth(ChartUtils.dp2px(density, DEFAULT_LINE_STROKE_WIDTH_DP));
         pointPaint.setStyle(Paint.Style.FILL);
+        //TODO
+        pointPaint.setShadowLayer(10, 0, 0, Color.parseColor("#4cf9c614"));
+        pointPaint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
 
         checkPrecision = ChartUtils.dp2px(density, 2);
 
