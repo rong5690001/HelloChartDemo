@@ -39,8 +39,8 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void setData2() {
-//        String[] x = new String[] {"1/2\n2016","1/2","1/2","1/2","1/2","1/2"};
-        String[] y = new String[]{"48", "49", "50"};
+        String[] x = new String[] {"1/2\n2016","1/2","1/2","1/2","1/2","1/2"};
+        String[] y = new String[] {"48", "49", "50"};
         final List<PointValue> values = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
             values.add(new PointValue(i, 0));
@@ -50,7 +50,8 @@ public class ChartActivity extends AppCompatActivity {
 //        values.add(new PointValue(2f, 3f));
 //        values.add(new PointValue(3f, 1f));
 //        values.add(new PointValue(4f, 3f));
-        Line line = new Line(values).setColor(Color.parseColor("#f9c614")).setCubic(true);
+        Line line = new Line(values).setColor(
+                Color.parseColor("#f9c614")).setCubic(true);
         line.setFilled(true);//区域填充
         line.setPointRadius(3);
         line.setHasGradientToTransparent(true);//渐变
@@ -64,14 +65,14 @@ public class ChartActivity extends AppCompatActivity {
 //        data.setBaseValue(48);
         data.setValueLabelBackgroundColor(Color.TRANSPARENT);
         data.setLines(lines);
-//        List<AxisValue> axisValuesX = new ArrayList<>();
-//        for (int i = 0; i < values.size(); i++) {
-//            AxisValue axisValue = new AxisValue(i);
-////            axisValue.setLabel("1/" + i);
-//            axisValuesX.add(axisValue);
-//        }
-        Axis axisBottom = new Axis();
-        data.setAxisXBottom(axisBottom);
+        List<AxisValue> axisValuesX = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            AxisValue axisValue = new AxisValue(i);
+            axisValue.setLabel("1/" + i + "\n2016");
+            axisValuesX.add(axisValue);
+        }
+        Axis axisX = new Axis(axisValuesX);
+        data.setAxisXBottom(axisX);
 //        List<AxisValue> axisValuesY = new ArrayList<>();
 //        for (int i = 0; i < values.size(); i++) {
 //            AxisValue axisValue = new AxisValue(i * 10);

@@ -10,6 +10,9 @@ import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.text.TextUtils;
 
 /**
@@ -41,7 +44,7 @@ public class AxesRenderer {
     private int axisMargin;
     private float density;
     private float scaledDensity;
-    private Paint[] labelPaintTab = new Paint[]{new Paint(), new Paint(), new Paint(), new Paint()};
+    private TextPaint[] labelPaintTab = new TextPaint[]{new TextPaint(), new TextPaint(), new TextPaint(), new TextPaint()};
     private Paint[] namePaintTab = new Paint[]{new Paint(), new Paint(), new Paint(), new Paint()};
     private Paint[] linePaintTab = new Paint[]{new Paint(), new Paint(), new Paint(), new Paint()};
     private float[] nameBaselineTab = new float[4];
@@ -532,12 +535,16 @@ public class AxesRenderer {
         boolean isAxisVertical = isAxisVertical(position);
         if (LEFT == position || RIGHT == position) {
             separationX1 = separationX2 = separationLineTab[position];
-            separationY1 = contentRectMargins.bottom;
+            //TODO
+            separationY1 = contentRectMargins.bottom - axisMargin * 3;
+//            separationY1 = contentRectMargins.bottom;
             separationY2 = contentRectMargins.top;
             lineX1 = contentRectMargins.left;
             lineX2 = contentRectMargins.right;
         } else if (TOP == position || BOTTOM == position) {
-            separationX1 = contentRectMargins.left;
+            //TODO
+            separationX1 = contentRectMargins.left + axisMargin * 4;
+//            separationX1 = contentRectMargins.left;
             separationX2 = contentRectMargins.right;
             separationY1 = separationY2 = separationLineTab[position];
             lineY1 = contentRectMargins.top;
@@ -566,7 +573,9 @@ public class AxesRenderer {
 
                 //为了添加虚线效果
                 Path path = new Path();
-                path.moveTo(lineX1, lineY1);
+                //TODO
+                path.moveTo(lineX1 + axisMargin * 4, lineY1);
+//                path.moveTo(lineX1, lineY1);
                 path.lineTo(lineX2, lineY2);
                 canvas.drawPath(path, linePaintTab[position]);
             }
@@ -602,17 +611,24 @@ public class AxesRenderer {
                 labelX = rawValuesTab[position][valueToDrawIndex];
             }
 
-            if (axis.hasTiltedLabels()) {
-                canvas.save();
-                canvas.translate(tiltedLabelXTranslation[position], tiltedLabelYTranslation[position]);
-                canvas.rotate(-45, labelX, labelY);
-                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
-                        labelPaintTab[position]);
-                canvas.restore();
-            } else {
-                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
-                        labelPaintTab[position]);
-            }
+            //TODO
+            StaticLayout layout = new StaticLayout("1/2\n2016", labelPaintTab[position]
+                    , 300, Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+//            // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
+//            if (axis.hasTiltedLabels()) {
+//                canvas.save();
+//                canvas.translate(tiltedLabelXTranslation[position], tiltedLabelYTranslation[position]);
+//                canvas.rotate(-45, labelX, labelY);
+//
+////                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
+////                        labelPaintTab[position]);
+//                layout.draw(canvas);
+//                canvas.restore();
+//            } else {
+//                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
+//                        labelPaintTab[position]);
+                layout.draw(canvas);
+//            }
         }
 
         // Drawing axis name
