@@ -1,6 +1,8 @@
 package com.rong.map.linechartview;
 
 import android.graphics.Color;
+import android.graphics.PathEffect;
+import android.graphics.SumPathEffect;
 import android.graphics.Typeface;
 
 import java.util.ArrayList;
@@ -71,6 +73,8 @@ public class Axis {
     private boolean hasSeparationLine = true;
 
     private boolean hasTiltedLabels = false;
+    //坐标轴线的效果
+    private PathEffect pathEffect = null;
 
     /**
      * Creates auto-generated axis without name and with default formatter.
@@ -97,7 +101,7 @@ public class Axis {
         this.typeface = axis.typeface;
         this.formatter = axis.formatter;
         this.hasSeparationLine = axis.hasSeparationLine;
-
+        this.pathEffect = axis.pathEffect;
         for (AxisValue axisValue : axis.values) {
             this.values.add(new AxisValue(axisValue));
         }
@@ -296,6 +300,15 @@ public class Axis {
 
     public Axis setHasTiltedLabels(boolean hasTiltedLabels) {
         this.hasTiltedLabels = hasTiltedLabels;
+        return this;
+    }
+
+    public PathEffect getPathEffect() {
+        return pathEffect;
+    }
+
+    public Axis setPathEffect(PathEffect pathEffect){
+        this.pathEffect = pathEffect;
         return this;
     }
 

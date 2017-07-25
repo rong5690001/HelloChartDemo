@@ -1,6 +1,7 @@
 package com.rong.map.recyclerviewitemtouchhelper;
 
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +80,8 @@ public class ChartActivity extends AppCompatActivity {
 //        }
         Axis axisY = Axis.generateAxisFromRange(20f, 100f, 10f)
 //        Axis axisY = new Axis(axisValuesY)
-                .setHasLines(true);
+                .setHasLines(true)
+                .setPathEffect(new DashPathEffect(new float[] { 8, 10, 8, 10}, 20));
 //                .setHasSeparationLine(true);
         data.setAxisYLeft(axisY);
         mChart.setLineChartData(data);

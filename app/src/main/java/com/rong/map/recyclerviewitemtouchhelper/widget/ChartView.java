@@ -3,7 +3,9 @@ package com.rong.map.recyclerviewitemtouchhelper.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -59,6 +61,13 @@ public class ChartView extends View {
         mPaint.setColor(Color.WHITE);
         canvas.drawCircle(0, 50, 20, mPaint);
 
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setPathEffect(new DashPathEffect(new float[]{8,10}, 0));
+        canvas.drawLine(150,50,150,500, mPaint);
 
+        Path path = new Path();
+        path.moveTo(50, 50);
+        path.lineTo(50, 200);
+        canvas.drawPath(path, mPaint);
     }
 }

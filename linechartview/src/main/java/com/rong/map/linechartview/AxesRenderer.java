@@ -2,9 +2,12 @@ package com.rong.map.linechartview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -160,6 +163,7 @@ public class AxesRenderer {
         namePaintTab[position].setColor(axis.getTextColor());
         namePaintTab[position].setTextSize(ChartUtils.sp2px(scaledDensity, axis.getTextSize()));
         linePaintTab[position].setColor(axis.getLineColor());
+        linePaintTab[position].setPathEffect(axis.getPathEffect());
 
         labelTextAscentTab[position] = Math.abs(fontMetricsTab[position].ascent);
         labelTextDescentTab[position] = Math.abs(fontMetricsTab[position].descent);
@@ -546,6 +550,9 @@ public class AxesRenderer {
 
         if (axis.hasLines()) {
             int valueToDrawIndex = 0;
+            if (axis.getPathEffect() != null) {
+                linePaintTab[position].setPathEffect(axis.getPathEffect());
+            }
             for (; valueToDrawIndex < valuesToDrawNumTab[position]; ++valueToDrawIndex) {
                 if (isAxisVertical) {
                     lineY1 = lineY2 = rawValuesTab[position][valueToDrawIndex];
@@ -556,8 +563,15 @@ public class AxesRenderer {
                 linesDrawBufferTab[position][valueToDrawIndex * 4 + 1] = lineY1;
                 linesDrawBufferTab[position][valueToDrawIndex * 4 + 2] = lineX2;
                 linesDrawBufferTab[position][valueToDrawIndex * 4 + 3] = lineY2;
+
+                //为了添加虚线效果
+                Path path = new Path();
+                path.moveTo(lineX1, lineY1);
+                path.lineTo(lineX2, lineY2);
+                canvas.drawPath(path, linePaintTab[position]);
             }
-            canvas.drawLines(linesDrawBufferTab[position], 0, valueToDrawIndex * 4, linePaintTab[position]);
+
+//            canvas.drawLines(linesDrawBufferTab[position], 0, valueToDrawIndex * 4, linePaintTab[position]);
         }
     }
 
