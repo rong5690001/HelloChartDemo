@@ -4,19 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-
+import com.rong.map.linechartview.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import lecho.lib.hellocharts.gesture.ZoomType;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.util.AxisAutoValues;
-import lecho.lib.hellocharts.view.LineChartView;
 
 public class ChartActivity extends AppCompatActivity {
 
@@ -33,24 +23,24 @@ public class ChartActivity extends AppCompatActivity {
     private void initView() {
         mChart = (LineChartView) findViewById(R.id.chart);
         mChart.setInteractive(true);
-        mChart.setZoomEnabled(true);
+        mChart.setZoomEnabled(false);
 //        mChart.setMaxZoom(1.5f);
         mChart.setScrollEnabled(true);
         mChart.setValueSelectionEnabled(true);
         Viewport v = new Viewport(mChart.getMaximumViewport());
         v.left = 0;
-        v.right= 14;
-        v.bottom = 10;
+        v.right = 24;
+        v.bottom = 25;
         v.top = 100;
         mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);
         mChart.setViewportCalculationEnabled(false);//注意要固定坐標，這個一定要設置
     }
 
-    private void setData2(){
+    private void setData2() {
 //        String[] x = new String[] {"1/2\n2016","1/2","1/2","1/2","1/2","1/2"};
-        String[] y = new String[] {"48","49","50"};
-        List<PointValue> values = new ArrayList<>();
+        String[] y = new String[]{"48", "49", "50"};
+        final List<PointValue> values = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
             values.add(new PointValue(i, 0));
         }
@@ -62,7 +52,7 @@ public class ChartActivity extends AppCompatActivity {
         Line line = new Line(values).setColor(Color.parseColor("#f9c614")).setCubic(true);
         line.setFilled(true);//区域填充
         line.setPointRadius(3);
-//        line.setHasGradientToTransparent();//渐变
+        line.setHasGradientToTransparent(true);//渐变
         line.setPointColor(Color.parseColor("#f9c614"));
 //        line.setPathEffect();
         line.setStrokeWidth(2);
@@ -73,13 +63,14 @@ public class ChartActivity extends AppCompatActivity {
 //        data.setBaseValue(48);
         data.setValueLabelBackgroundColor(Color.TRANSPARENT);
         data.setLines(lines);
-        List<AxisValue> axisValuesX = new ArrayList<>();
-        for (int i = 0; i < values.size(); i++) {
-            AxisValue axisValue = new AxisValue(i);
-//            axisValue.setLabel("1/" + i);
-            axisValuesX.add(axisValue);
-        }
-        data.setAxisXBottom(new Axis(axisValuesX));
+//        List<AxisValue> axisValuesX = new ArrayList<>();
+//        for (int i = 0; i < values.size(); i++) {
+//            AxisValue axisValue = new AxisValue(i);
+////            axisValue.setLabel("1/" + i);
+//            axisValuesX.add(axisValue);
+//        }
+        Axis axisBottom = new Axis();
+        data.setAxisXBottom(axisBottom);
 //        List<AxisValue> axisValuesY = new ArrayList<>();
 //        for (int i = 0; i < values.size(); i++) {
 //            AxisValue axisValue = new AxisValue(i * 10);
@@ -88,29 +79,30 @@ public class ChartActivity extends AppCompatActivity {
 //        }
         Axis axisY = Axis.generateAxisFromRange(20f, 100f, 10f)
 //        Axis axisY = new Axis(axisValuesY)
-                .setHasLines(true)
-                .setHasSeparationLine(true);
+                .setHasLines(true);
+//                .setHasSeparationLine(true);
         data.setAxisYLeft(axisY);
         mChart.setLineChartData(data);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                prepareDataAnimation();
-                mChart.startDataAnimation(2000);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mChart.setZoomLevelWithAnimation(6, 0, 2);
-                        mChart.setZoomType(ZoomType.HORIZONTAL);
-                    }
-                }, 2500);
-            }
-        }, 500);
+        prepareDataAnimation();
+        mChart.startDataAnimation(1000);
+//                        mChart.setZoomLevel(24, values.get(24).getY(), 2);
+//                        mChart.setZoomType(ZoomType.HORIZONTAL);
+        Viewport v = new Viewport(mChart.getMaximumViewport());
+        v.left = 16;
+        v.right = 24;
+        v.bottom = 25;
+        v.top = 100;
+//                        mChart.setMaximumViewport(v);
+        mChart.setCurrentViewport(v);
+
     }
+
     LineChartData data;
+    List<PointValue> values;
+
     private void setData() {
-        List<PointValue> values = new ArrayList<PointValue>();
+        values = new ArrayList<PointValue>();
         values.add(new PointValue(0f, 48.1f));
 //        values.add(new PointValue(1f, 49.3f));
         values.add(new PointValue(2f, 48.3f));
@@ -202,12 +194,6 @@ public class ChartActivity extends AppCompatActivity {
         mChart.setLineChartData(data);
 //        mChart.setValueTouchEnabled(false);
     }
-
-    /**
-     * To animate values you have to change targets values and then call {@link Chart#startDataAnimation()}
-     * method(don't confuse with View.animate()). If you operate on data that was set before you don't have to call
-     * {@link LineChartView#setLineChartData(LineChartData)} again.
-     */
     private void prepareDataAnimation() {
         int i = 0;
         for (Line line : data.getLines()) {

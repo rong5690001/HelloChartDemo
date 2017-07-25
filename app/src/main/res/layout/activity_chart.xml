@@ -11,9 +11,10 @@
     <com.rong.map.recyclerviewitemtouchhelper.widget.ChartView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:visibility="gone"/>
 
-    <lecho.lib.hellocharts.view.LineChartView
+    <com.rong.map.linechartview.LineChartView
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
