@@ -37,6 +37,7 @@ public class ChartActivity extends AppCompatActivity {
         mChart.setCurrentViewport(v);
         mChart.setViewportCalculationEnabled(false);//注意要固定坐標，這個一定要設置
         mChart.setBackgroundColor(Color.WHITE);
+        mChart.setValueTouchEnabled(false);
     }
 
     private void setData2() {
@@ -63,11 +64,14 @@ public class ChartActivity extends AppCompatActivity {
 //        line.setPathEffect();
         line.setStrokeWidth(2);
         line.setHasLabels(true);
+//        line.setDarkenColor(Color.TRANSPARENT);
         List<Line> lines = new ArrayList<>();
         lines.add(line);
         data = new LineChartData();
 //        data.setBaseValue(48);
         data.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        data.setValueLabelBackgroundAuto(false);
+        data.setValueLabelsTextColor(Color.parseColor("#3b3b3b"));
         data.setLines(lines);
         List<AxisValue> axisValuesX = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
@@ -103,6 +107,9 @@ public class ChartActivity extends AppCompatActivity {
         v.top = 100;
 //                        mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);
+        mChart.selectValue(new SelectedValue(0
+                , values.size() - 1
+                , SelectedValue.SelectedValueType.LINE));
 
     }
 

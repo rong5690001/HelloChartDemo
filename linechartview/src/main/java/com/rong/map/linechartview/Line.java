@@ -312,10 +312,10 @@ public class Line {
     }
 
     public int[] getGradientColors() {
-        if(gradientColors[0] == 0){
+        if (gradientColors[0] == 0) {
             gradientColors[0] = color;
         }
-        if(gradientColors[1] == 0){
+        if (gradientColors[1] == 0) {
             gradientColors[1] = color & 0x00ffffff;
         }
         return gradientColors;
