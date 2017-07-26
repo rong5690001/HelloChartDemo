@@ -65,7 +65,7 @@ public abstract class AbstractChartView extends View implements Chart {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+//        canvas.drawColor(ChartUtils.DEFAULT_DARKEN_COLOR);
         if (isEnabled()) {
             axesRenderer.drawInBackground(canvas);
             int clipRestoreCount = canvas.save();

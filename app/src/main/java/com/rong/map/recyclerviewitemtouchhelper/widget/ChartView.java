@@ -1,13 +1,20 @@
 package com.rong.map.recyclerviewitemtouchhelper.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ComposeShader;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -15,6 +22,9 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.rong.map.linechartview.ChartUtils;
+import com.rong.map.recyclerviewitemtouchhelper.R;
 
 /**
  * 作者：陈华榕
@@ -29,6 +39,7 @@ public class ChartView extends View {
     private int bgColor = Color.TRANSPARENT;
     private int width, height;
     private TextPaint mTextPaint;
+    private float density;
 
     public ChartView(Context context) {
         this(context, null);
@@ -52,6 +63,7 @@ public class ChartView extends View {
         cRectF = new RectF(0, 0, 295, 129);
         width = 295;
         height = 129;
+        density = getResources().getDisplayMetrics().density;
     }
 
     @Override
@@ -90,5 +102,27 @@ public class ChartView extends View {
                 , rect.width(), Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
         layout.draw(canvas);
         canvas.restore();
+
+
+        //TODO
+        mPaint.setShadowLayer(50, 0, 0, Color.parseColor("#4cf9c614"));
+        mPaint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
+        mPaint.setPathEffect(null);
+        Shader shader1 = new RadialGradient(400, 30
+                , ChartUtils.dp2px(density, 6.5f)
+                , Color.parseColor("#f9c614")
+                , Color.parseColor("#4cf9c614")
+                , Shader.TileMode.REPEAT);
+        Shader shader2 = new RadialGradient(400, 30
+                , ChartUtils.dp2px(density, 6.5f)
+                , Color.parseColor("#ffffff")
+                , Color.parseColor("#ffffff")
+                , Shader.TileMode.CLAMP);
+        ComposeShader composeShader = new ComposeShader(shader2, shader1, PorterDuff.Mode.DST_OVER);
+        mPaint.setShader(composeShader);
+        mPaint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(400, 30, ChartUtils.dp2px(density, 6.5f), mPaint);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icn_recent_point);
+        canvas.drawBitmap(bitmap, 380, 30, mPaint);
     }
 }

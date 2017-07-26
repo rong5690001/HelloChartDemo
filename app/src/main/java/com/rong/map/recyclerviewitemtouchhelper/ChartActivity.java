@@ -36,6 +36,7 @@ public class ChartActivity extends AppCompatActivity {
         mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);
         mChart.setViewportCalculationEnabled(false);//注意要固定坐標，這個一定要設置
+        mChart.setBackgroundColor(Color.WHITE);
     }
 
     private void setData2() {
@@ -56,6 +57,9 @@ public class ChartActivity extends AppCompatActivity {
         line.setPointRadius(3);
         line.setHasGradientToTransparent(true);//渐变
         line.setPointColor(Color.parseColor("#f9c614"));
+        line.setPointBitmap(true);
+        line.setGradientColors(Color.parseColor("#f9c614")
+                , Color.parseColor("#00f9c614"));
 //        line.setPathEffect();
         line.setStrokeWidth(2);
         line.setHasLabels(true);
@@ -93,7 +97,7 @@ public class ChartActivity extends AppCompatActivity {
 //                        mChart.setZoomLevel(24, values.get(24).getY(), 2);
 //                        mChart.setZoomType(ZoomType.HORIZONTAL);
         Viewport v = new Viewport(mChart.getMaximumViewport());
-        v.left = 16;
+        v.left = 18;
         v.right = 24;
         v.bottom = 25;
         v.top = 100;

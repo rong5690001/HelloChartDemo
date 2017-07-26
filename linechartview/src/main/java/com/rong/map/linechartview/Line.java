@@ -25,6 +25,7 @@ public class Line {
     private int pointRadius = DEFAULT_POINT_RADIUS_DP;
     private boolean hasGradientToTransparent = false;
     private boolean hasPoints = true;
+    private boolean isPointBitmap = false;
     private boolean hasLines = true;
     private boolean hasLabels = false;
     private boolean hasLabelsOnlyForSelected = false;
@@ -35,6 +36,7 @@ public class Line {
     private PathEffect pathEffect;
     private LineChartValueFormatter formatter = new SimpleLineChartValueFormatter();
     private List<PointValue> values = new ArrayList<PointValue>();
+    private int[] gradientColors = new int[2];
 
     public Line() {
 
@@ -62,6 +64,7 @@ public class Line {
         this.shape = line.shape;
         this.pathEffect = line.pathEffect;
         this.formatter = line.formatter;
+        this.isPointBitmap = line.isPointBitmap;
 
         for (PointValue pointValue : line.values) {
             this.values.add(new PointValue(pointValue));
@@ -298,5 +301,28 @@ public class Line {
             this.formatter = formatter;
         }
         return this;
+    }
+
+    public boolean isPointBitmap() {
+        return isPointBitmap;
+    }
+
+    public void setPointBitmap(boolean pointBitmap) {
+        isPointBitmap = pointBitmap;
+    }
+
+    public int[] getGradientColors() {
+        if(gradientColors[0] == 0){
+            gradientColors[0] = color;
+        }
+        if(gradientColors[1] == 0){
+            gradientColors[1] = color & 0x00ffffff;
+        }
+        return gradientColors;
+    }
+
+    public void setGradientColors(int fromColor, int toColor) {
+        this.gradientColors[0] = fromColor;
+        this.gradientColors[1] = toColor;
     }
 }

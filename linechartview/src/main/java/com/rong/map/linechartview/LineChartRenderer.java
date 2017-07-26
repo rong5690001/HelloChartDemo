@@ -1,15 +1,19 @@
 package com.rong.map.linechartview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Path;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.Shader;
 
@@ -38,11 +42,12 @@ public class LineChartRenderer extends AbstractChartRenderer {
     private Bitmap softwareBitmap;
     private Canvas softwareCanvas = new Canvas();
     private Viewport tempMaximumViewport = new Viewport();
+    private Resources resources;
 
     public LineChartRenderer(Context context, Chart chart, LineChartDataProvider dataProvider) {
         super(context, chart);
         this.dataProvider = dataProvider;
-
+        resources = context.getResources();
         touchToleranceMargin = ChartUtils.dp2px(density, DEFAULT_TOUCH_TOLERANCE_MARGIN_DP);
 
         linePaint.setAntiAlias(true);
@@ -54,8 +59,13 @@ public class LineChartRenderer extends AbstractChartRenderer {
 //        pointPaint.setStrokeWidth(ChartUtils.dp2px(density, DEFAULT_LINE_STROKE_WIDTH_DP));
         pointPaint.setStyle(Paint.Style.FILL);
         //TODO
-        pointPaint.setShadowLayer(10, 0, 0, Color.parseColor("#4cf9c614"));
-        pointPaint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
+//        pointPaint.setShadowLayer(10, 0, 0, Color.parseColor("#4cf9c614"));
+//        pointPaint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
+//        Shader shader1 = new RadialGradient(400, 30, ChartUtils.dp2px(density, 6.5f)
+//                , Color.parseColor("#f9c614")
+//                , Color.parseColor("#4cf9c614")
+//                , Shader.TileMode.REPEAT);
+//        pointPaint.setShader(shader1);
 
         checkPrecision = ChartUtils.dp2px(density, 2);
 
@@ -399,7 +409,16 @@ public class LineChartRenderer extends AbstractChartRenderer {
             canvas.drawRect(rawX - pointRadius, rawY - pointRadius, rawX + pointRadius, rawY + pointRadius,
                     pointPaint);
         } else if (ValueShape.CIRCLE.equals(line.getShape())) {
-            canvas.drawCircle(rawX, rawY, pointRadius, pointPaint);
+            if(line.isPointBitmap()){//点是图片
+                //TODO
+                Bitmap pointBitmap = ChartUtils.getResBitmap(resources
+                        , R.drawable.icn_point
+                        , (int) pointRadius * 2
+                        , (int) pointRadius * 2);
+                canvas.drawBitmap(pointBitmap, rawX - pointRadius, rawY - pointRadius, pointPaint);
+            } else {
+                canvas.drawCircle(rawX, rawY, pointRadius, pointPaint);
+            }
         } else if (ValueShape.DIAMOND.equals(line.getShape())) {
             canvas.save();
             canvas.rotate(45, rawX, rawY);
@@ -422,7 +441,19 @@ public class LineChartRenderer extends AbstractChartRenderer {
         if (selectedValue.getFirstIndex() == lineIndex && selectedValue.getSecondIndex() == valueIndex) {
             int pointRadius = ChartUtils.dp2px(density, line.getPointRadius());
             pointPaint.setColor(line.getDarkenColor());
-            drawPoint(canvas, line, pointValue, rawX, rawY, pointRadius + touchToleranceMargin);
+            if(line.isPointBitmap()){//点作为图片
+                //TODO
+                Bitmap pointBitmap = ChartUtils.getResBitmap(resources
+                        , R.drawable.icn_recent_point
+                        , (pointRadius + touchToleranceMargin) * 2
+                        , (pointRadius + touchToleranceMargin) * 2);
+
+                canvas.drawBitmap(pointBitmap
+                        , rawX - (pointRadius + touchToleranceMargin)
+                        , rawY - (pointRadius + touchToleranceMargin), pointPaint);
+            } else {
+                drawPoint(canvas, line, pointValue, rawX, rawY, pointRadius + touchToleranceMargin);
+            }
             if (line.hasLabels() || line.hasLabelsOnlyForSelected()) {
                 drawLabel(canvas, line, pointValue, rawX, rawY, pointRadius + labelOffset);
             }
@@ -497,8 +528,8 @@ public class LineChartRenderer extends AbstractChartRenderer {
         linePaint.setStyle(Paint.Style.FILL);
         linePaint.setAlpha(line.getAreaTransparency());
         linePaint.setShader(line.getGradientToTransparent() ?
-                new LinearGradient(0, 0, 0, canvas.getHeight(), line.getColor(),
-                        line.getColor() & 0x00ffffff, Shader.TileMode.MIRROR) :
+                new LinearGradient(0, 0, 0, canvas.getHeight(), line.getGradientColors()[0],
+                        line.getGradientColors()[1], Shader.TileMode.MIRROR) :
                 null);
         canvas.drawPath(path, linePaint);
         linePaint.setStyle(Paint.Style.STROKE);

@@ -1,7 +1,11 @@
 package com.rong.map.linechartview;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.util.TypedValue;
 
 public abstract class ChartUtils {
@@ -37,6 +41,14 @@ public abstract class ChartUtils {
 
     }
 
+    public static int dp2px(float density, float dp) {
+        if (dp == 0) {
+            return 0;
+        }
+        return (int) (dp * density + 0.5f);
+
+    }
+
     public static int px2dp(float density, int px) {
         return (int) Math.ceil(px / density);
     }
@@ -65,6 +77,19 @@ public abstract class ChartUtils {
         hsv[2] = hsv[2] * DARKEN_INTENSITY;
         int tempColor = Color.HSVToColor(hsv);
         return Color.argb(alpha, Color.red(tempColor), Color.green(tempColor), Color.blue(tempColor));
+    }
+
+    public static Bitmap getResBitmap(Resources resources, int res, int newWidth, int newHeight){
+        Bitmap reBitmap = BitmapFactory.decodeResource(resources, res, new BitmapFactory.Options());
+        int width = reBitmap.getWidth();
+        int height = reBitmap.getHeight();
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        return Bitmap.createBitmap(reBitmap, 0, 0, width, height, matrix, true);
     }
 
 }
