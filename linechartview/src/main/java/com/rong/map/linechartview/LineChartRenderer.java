@@ -62,9 +62,9 @@ public class LineChartRenderer extends AbstractChartRenderer {
     }
 
     public void onChartSizeChanged() {
-        final int internalMargin = calculateContentRectInternalMargin();
-        computator.insetContentRectByInternalMargins(internalMargin, internalMargin,
-                internalMargin, internalMargin);
+//        final int internalMargin = calculateContentRectInternalMargin();
+//        computator.insetContentRectByInternalMargins(internalMargin, internalMargin,
+//                internalMargin, internalMargin);
         if (computator.getChartWidth() > 0 && computator.getChartHeight() > 0) {
             softwareBitmap = Bitmap.createBitmap(computator.getChartWidth(), computator.getChartHeight(),
                     Bitmap.Config.ARGB_8888);
