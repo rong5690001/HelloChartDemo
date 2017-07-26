@@ -6,10 +6,15 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * 作者：陈华榕
@@ -22,7 +27,8 @@ public class ChartView extends View {
     private Paint mPaint;
     private RectF cRectF;
     private int bgColor = Color.TRANSPARENT;
-    private int width,height;
+    private int width, height;
+    private TextPaint mTextPaint;
 
     public ChartView(Context context) {
         this(context, null);
@@ -39,6 +45,10 @@ public class ChartView extends View {
 
     private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setTextSize(22);
+        mTextPaint.setAntiAlias(true);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
         cRectF = new RectF(0, 0, 295, 129);
         width = 295;
         height = 129;
@@ -62,12 +72,23 @@ public class ChartView extends View {
         canvas.drawCircle(0, 50, 20, mPaint);
 
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setPathEffect(new DashPathEffect(new float[]{8,10}, 0));
-        canvas.drawLine(150,50,150,500, mPaint);
+        mPaint.setPathEffect(new DashPathEffect(new float[]{8, 10}, 0));
+        canvas.drawLine(150, 50, 150, 500, mPaint);
 
         Path path = new Path();
         path.moveTo(50, 50);
         path.lineTo(50, 200);
         canvas.drawPath(path, mPaint);
+
+        canvas.save();
+        canvas.scale(1, -1);
+        String text = "1/2\n2016";
+        Rect rect = new Rect();
+        mTextPaint.getTextBounds(text, 0, text.length(), rect);
+        //Text换行
+        StaticLayout layout = new StaticLayout(text, mTextPaint
+                , rect.width(), Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+        layout.draw(canvas);
+        canvas.restore();
     }
 }

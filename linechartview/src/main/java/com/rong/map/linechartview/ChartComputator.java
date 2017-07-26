@@ -21,6 +21,8 @@ public class ChartComputator {
     protected Rect contentRectMinusAllMargins = new Rect();
     protected Rect contentRectMinusAxesMargins = new Rect();
     protected Rect maxContentRect = new Rect();
+    //TODO 业务需要添加。。。LineCharRender专用
+    protected int internalMargin;
     /**
      * This rectangle represents the currently visible chart values ranges. The currently visible chart X values are
      * from this rectangle's left to its right. The currently visible chart Y values are from this rectangle's top to
@@ -338,9 +340,20 @@ public class ChartComputator {
 
     }
 
+
+    public int getInternalMargin() {
+        return internalMargin;
+    }
+
+    public void setInternalMargin(int internalMargin) {
+        this.internalMargin = internalMargin;
+    }
+
     private void computeMinimumWidthAndHeight() {
         minViewportWidth = this.maxViewport.width() / maxZoom;
         minViewportHeight = this.maxViewport.height() / maxZoom;
     }
+
+
 
 }

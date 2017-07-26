@@ -66,9 +66,10 @@ public class LineChartRenderer extends AbstractChartRenderer {
          * 这里将linechartview的区域做了压缩
          * ，也就是为什么contentRectMinusAllMargins.left会比其他view的多30
          */
-//        final int internalMargin = calculateContentRectInternalMargin();
-//        computator.insetContentRectByInternalMargins(internalMargin, internalMargin,
-//                internalMargin, internalMargin);
+        final int internalMargin = calculateContentRectInternalMargin();
+        computator.setInternalMargin(internalMargin);
+        computator.insetContentRectByInternalMargins(0, internalMargin,
+                internalMargin, internalMargin);
         if (computator.getChartWidth() > 0 && computator.getChartHeight() > 0) {
             softwareBitmap = Bitmap.createBitmap(computator.getChartWidth(), computator.getChartHeight(),
                     Bitmap.Config.ARGB_8888);
@@ -190,7 +191,6 @@ public class LineChartRenderer extends AbstractChartRenderer {
                 if (pointValue.getY() > tempMaximumViewport.top) {
                     tempMaximumViewport.top = pointValue.getY();
                 }
-
             }
         }
     }
@@ -206,7 +206,7 @@ public class LineChartRenderer extends AbstractChartRenderer {
                 }
             }
         }
-        return ChartUtils.dp2px(density, contentAreaMargin);
+        return ChartUtils.dp2px(density, contentAreaMargin + DEFAULT_TOUCH_TOLERANCE_MARGIN_DP * 3);
     }
 
     /**

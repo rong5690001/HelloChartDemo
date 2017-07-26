@@ -53,6 +53,13 @@ public class AxisValue {
         return label;
     }
 
+    public String getLabelAsString() {
+        if (label == null) {
+            return "";
+        }
+        return String.valueOf(label);
+    }
+
     /**
      * Set custom label for this axis value.
      *
