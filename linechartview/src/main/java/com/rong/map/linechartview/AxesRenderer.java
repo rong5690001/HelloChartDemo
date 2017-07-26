@@ -536,15 +536,15 @@ public class AxesRenderer {
         if (LEFT == position || RIGHT == position) {
             separationX1 = separationX2 = separationLineTab[position];
             //TODO
-            separationY1 = contentRectMargins.bottom - axisMargin * 3;
-//            separationY1 = contentRectMargins.bottom;
+//            separationY1 = contentRectMargins.bottom - axisMargin * 4;
+            separationY1 = contentRectMargins.bottom;
             separationY2 = contentRectMargins.top;
             lineX1 = contentRectMargins.left;
             lineX2 = contentRectMargins.right;
         } else if (TOP == position || BOTTOM == position) {
             //TODO
-            separationX1 = contentRectMargins.left + axisMargin * 4;
-//            separationX1 = contentRectMargins.left;
+//            separationX1 = contentRectMargins.left + axisMargin * 4;
+            separationX1 = contentRectMargins.left;
             separationX2 = contentRectMargins.right;
             separationY1 = separationY2 = separationLineTab[position];
             lineY1 = contentRectMargins.top;
@@ -574,7 +574,7 @@ public class AxesRenderer {
                 //为了添加虚线效果
                 Path path = new Path();
                 //TODO
-                path.moveTo(lineX1 + axisMargin * 4, lineY1);
+                path.moveTo(lineX1, lineY1);
 //                path.moveTo(lineX1, lineY1);
                 path.lineTo(lineX2, lineY2);
                 canvas.drawPath(path, linePaintTab[position]);
@@ -612,8 +612,8 @@ public class AxesRenderer {
             }
 
             //TODO
-            StaticLayout layout = new StaticLayout("1/2\n2016", labelPaintTab[position]
-                    , 300, Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+//            StaticLayout layout = new StaticLayout("1/2\n2016", labelPaintTab[position]
+//                    , 300, Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
 //            // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
 //            if (axis.hasTiltedLabels()) {
 //                canvas.save();
@@ -625,9 +625,9 @@ public class AxesRenderer {
 //                layout.draw(canvas);
 //                canvas.restore();
 //            } else {
-//                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
-//                        labelPaintTab[position]);
-                layout.draw(canvas);
+                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
+                        labelPaintTab[position]);
+//                layout.draw(canvas);
 //            }
         }
 

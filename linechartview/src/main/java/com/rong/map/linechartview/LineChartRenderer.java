@@ -62,6 +62,10 @@ public class LineChartRenderer extends AbstractChartRenderer {
     }
 
     public void onChartSizeChanged() {
+        /**
+         * 这里将linechartview的区域做了压缩
+         * ，也就是为什么contentRectMinusAllMargins.left会比其他view的多30
+         */
 //        final int internalMargin = calculateContentRectInternalMargin();
 //        computator.insetContentRectByInternalMargins(internalMargin, internalMargin,
 //                internalMargin, internalMargin);
