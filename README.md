@@ -23,8 +23,8 @@ dependencies {
 	</repository>
 </repositories>
 ```
-  Add the dependency:
-  ```
+Add the dependency:
+```
 <dependency>
   	<groupId>com.github.rong5690001</groupId>
 	<artifactId>HelloChartDemo</artifactId>
