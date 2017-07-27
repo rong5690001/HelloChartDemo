@@ -1,12 +1,14 @@
 
 ## gradle 
 Add it in your root build.gradle at the end of repositories:
+```
 allprojects {
-		repositories {
+    	repositories {
 			...
 			maven { url 'https://jitpack.io' }
 		}
 	}
+    ```
 Add the dependency:
 ```
 dependencies {
@@ -31,3 +33,4 @@ Add the dependency:
 	<version>1.1</version>
 </dependency>
 ```
+
