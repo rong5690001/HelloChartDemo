@@ -8,7 +8,7 @@ allprojects {
 			maven { url 'https://jitpack.io' }
 		}
 	}
-    ```
+```
 Add the dependency:
 ```
 dependencies {
