@@ -614,8 +614,8 @@ public class AxesRenderer {
                 textValue = axisValue.getLabelAsString();
             }
 
-            String text = String.valueOf(labelBuffer);
-            System.out.println("text:" + text);
+//            String text = String.valueOf(labelBuffer);
+            System.out.println("textValue:" + textValue);
             Rect textRect = new Rect();
             labelPaintTab[position].getTextBounds(textValue, 0, textValue.length(), textRect);
 
@@ -631,7 +631,7 @@ public class AxesRenderer {
                 translateY = labelY - textRect.height() * 3;
                 canvas.translate(labelX, translateY);
                 //TODO
-                StaticLayout layout = new StaticLayout(text, labelPaintTab[position]
+                StaticLayout layout = new StaticLayout(textValue, labelPaintTab[position]
                         , textRect.width(), Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
                 // 这里的参数300，表示字符串的长度，当满300时，就会换行，也可以使用“\r\n”来实现换行
                 layout.draw(canvas);
