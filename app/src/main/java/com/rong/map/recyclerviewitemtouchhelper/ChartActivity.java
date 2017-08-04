@@ -5,11 +5,14 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
 import com.rong.map.linechartview.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChartActivity extends AppCompatActivity {
+public class ChartActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LineChartView mChart;
 
@@ -41,8 +44,8 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void setData2() {
-        String[] x = new String[] {"1/2\n2016","1/2","1/2","1/2","1/2","1/2"};
-        String[] y = new String[] {"48", "49", "50"};
+        String[] x = new String[]{"1/2\n2016", "1/2", "1/2", "1/2", "1/2", "1/2"};
+        String[] y = new String[]{"48", "49", "50"};
         final List<PointValue> values = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
             values.add(new PointValue(i, 0));
@@ -76,7 +79,7 @@ public class ChartActivity extends AppCompatActivity {
         List<AxisValue> axisValuesX = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             AxisValue axisValue = new AxisValue(i);
-            axisValue.setLabel("1/" + i + "\n2016");
+            axisValue.setLabel("第" + i + "季\n2016");
             axisValuesX.add(axisValue);
         }
         Axis axisX = new Axis(axisValuesX);
@@ -91,7 +94,7 @@ public class ChartActivity extends AppCompatActivity {
 //        Axis axisY = new Axis(axisValuesY)
                 .setHasLines(true)
                 .setLineColor(Color.BLACK)
-                .setPathEffect(new DashPathEffect(new float[] { 10, 10}, 0));
+                .setPathEffect(new DashPathEffect(new float[]{10, 10}, 0));
 //                .setHasSeparationLine(true);
         data.setAxisYLeft(axisY);
         mChart.setLineChartData(data);
@@ -209,6 +212,7 @@ public class ChartActivity extends AppCompatActivity {
         mChart.setLineChartData(data);
 //        mChart.setValueTouchEnabled(false);
     }
+
     private void prepareDataAnimation() {
         int i = 0;
         for (Line line : data.getLines()) {
@@ -221,6 +225,15 @@ public class ChartActivity extends AppCompatActivity {
                 value.setLabel(String.valueOf(value.getX()));
                 i++;
             }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button:
+                setData2();
+                break;
         }
     }
 }

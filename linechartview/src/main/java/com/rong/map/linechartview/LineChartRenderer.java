@@ -91,8 +91,11 @@ public class LineChartRenderer extends AbstractChartRenderer {
     public void onChartDataChanged() {
         super.onChartDataChanged();
         final int internalMargin = calculateContentRectInternalMargin();
-        computator.insetContentRectByInternalMargins(internalMargin, internalMargin,
+        //TODO
+        computator.insetContentRectByInternalMargins(0, internalMargin,
                 internalMargin, internalMargin);
+//        computator.insetContentRectByInternalMargins(internalMargin, internalMargin,
+//                internalMargin, internalMargin);
         baseValue = dataProvider.getLineChartData().getBaseValue();
 
         onChartViewportChanged();

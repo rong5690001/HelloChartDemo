@@ -628,7 +628,7 @@ public class AxesRenderer {
                 labelX = rawValuesTab[position][valueToDrawIndex];
                 //TODO 业务需要，后续做优化
                 canvas.save();
-                translateY = labelY - textRect.height() * 3;
+                translateY = labelY - textRect.height() * 2 - 9.5f;
                 canvas.translate(labelX, translateY);
                 //TODO
                 StaticLayout layout = new StaticLayout(textValue, labelPaintTab[position]
