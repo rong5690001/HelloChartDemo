@@ -79,7 +79,8 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         List<AxisValue> axisValuesX = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             AxisValue axisValue = new AxisValue(i);
-            axisValue.setLabel("第" + i + "季\n2016");
+            axisValue.setLabel("1/" + i + "\n2016");
+//            axisValue.setLabel("第" + i + "季\n2016");
             axisValuesX.add(axisValue);
         }
         Axis axisX = new Axis(axisValuesX);

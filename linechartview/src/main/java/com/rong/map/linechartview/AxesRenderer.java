@@ -618,7 +618,9 @@ public class AxesRenderer {
             System.out.println("textValue:" + textValue);
             Rect textRect = new Rect();
             labelPaintTab[position].getTextBounds(textValue, 0, textValue.length(), textRect);
-
+            //TODO 业务需要，后续做优化
+            Rect translateRect = new Rect();
+            labelPaintTab[position].getTextBounds("0", 0, 1, translateRect);
             float translateY;
             if (isAxisVertical) {
                 labelY = rawValuesTab[position][valueToDrawIndex];
@@ -628,7 +630,7 @@ public class AxesRenderer {
                 labelX = rawValuesTab[position][valueToDrawIndex];
                 //TODO 业务需要，后续做优化
                 canvas.save();
-                translateY = labelY - textRect.height() * 2 - 9.5f;
+                translateY = labelY - translateRect.height() * 3;
                 canvas.translate(labelX, translateY);
                 //TODO
                 StaticLayout layout = new StaticLayout(textValue, labelPaintTab[position]
