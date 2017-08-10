@@ -595,7 +595,7 @@ public class AxesRenderer {
         labelX = labelY = 0;
         boolean isAxisVertical = isAxisVertical(position);
         if (LEFT == position || RIGHT == position) {
-            labelX = labelBaselineTab[position];
+            labelX = labelBaselineTab[position] + 3;
         } else if (TOP == position || BOTTOM == position) {
             labelY = labelBaselineTab[position];
         }
