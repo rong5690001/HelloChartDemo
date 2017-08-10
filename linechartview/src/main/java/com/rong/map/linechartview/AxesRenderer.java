@@ -559,7 +559,7 @@ public class AxesRenderer {
         }
 
         if (axis.hasLines()) {
-            int valueToDrawIndex = 0;
+            int valueToDrawIndex = 1;
             if (axis.getPathEffect() != null) {
                 linePaintTab[position].setPathEffect(axis.getPathEffect());
             }
