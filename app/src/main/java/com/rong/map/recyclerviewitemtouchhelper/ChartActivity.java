@@ -34,7 +34,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         Viewport v = new Viewport(mChart.getMaximumViewport());
         v.left = 0;
         v.right = 24;
-        v.bottom = 25;
+        v.bottom = 30;
         v.top = 100;
         mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);

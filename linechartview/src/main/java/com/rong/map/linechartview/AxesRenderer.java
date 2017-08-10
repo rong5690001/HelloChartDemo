@@ -574,13 +574,16 @@ public class AxesRenderer {
                 linesDrawBufferTab[position][valueToDrawIndex * 4 + 2] = lineX2;
                 linesDrawBufferTab[position][valueToDrawIndex * 4 + 3] = lineY2;
 
-                //为了添加虚线效果
-                Path path = new Path();
-                //TODO
-                path.moveTo(lineX1, lineY1);
+                if (separationY1 != lineY1
+                        && isAxisVertical) {//虚线不能与轴线重合
+                    //为了添加虚线效果
+                    Path path = new Path();
+                    //TODO
+                    path.moveTo(lineX1, lineY1);
 //                path.moveTo(lineX1, lineY1);
-                path.lineTo(lineX2, lineY2);
-                canvas.drawPath(path, linePaintTab[position]);
+                    path.lineTo(lineX2, lineY2);
+                    canvas.drawPath(path, linePaintTab[position]);
+                }
             }
 
 //            canvas.drawLines(linesDrawBufferTab[position], 0, valueToDrawIndex * 4, linePaintTab[position]);
