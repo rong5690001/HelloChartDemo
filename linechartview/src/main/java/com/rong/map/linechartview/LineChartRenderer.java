@@ -56,16 +56,7 @@ public class LineChartRenderer extends AbstractChartRenderer {
         linePaint.setStrokeWidth(ChartUtils.dp2px(density, DEFAULT_LINE_STROKE_WIDTH_DP));
 
         pointPaint.setAntiAlias(true);
-//        pointPaint.setStrokeWidth(ChartUtils.dp2px(density, DEFAULT_LINE_STROKE_WIDTH_DP));
         pointPaint.setStyle(Paint.Style.FILL);
-        //TODO
-//        pointPaint.setShadowLayer(10, 0, 0, Color.parseColor("#4cf9c614"));
-//        pointPaint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
-//        Shader shader1 = new RadialGradient(400, 30, ChartUtils.dp2px(density, 6.5f)
-//                , Color.parseColor("#f9c614")
-//                , Color.parseColor("#4cf9c614")
-//                , Shader.TileMode.REPEAT);
-//        pointPaint.setShader(shader1);
 
         checkPrecision = ChartUtils.dp2px(density, 2);
 

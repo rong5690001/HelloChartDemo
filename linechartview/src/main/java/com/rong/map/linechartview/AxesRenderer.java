@@ -19,7 +19,7 @@ import android.text.TextUtils;
  * Default axes renderer. Can draw maximum four axes - two horizontal(top/bottom) and two vertical(left/right).
  */
 public class AxesRenderer {
-    private static final int DEFAULT_AXIS_MARGIN_DP = 2;
+    private static final int DEFAULT_AXIS_MARGIN_DP = 10;
 
     /**
      * Axis positions indexes, used for indexing tabs that holds axes parameters, see below.
@@ -633,7 +633,7 @@ public class AxesRenderer {
                 labelX = rawValuesTab[position][valueToDrawIndex];
                 //TODO 业务需要，后续做优化
                 canvas.save();
-                translateY = labelY - translateRect.height() * 3;
+                translateY = labelY - translateRect.height() * 3 - axisMargin;
                 canvas.translate(labelX, translateY);
                 //TODO
                 StaticLayout layout = new StaticLayout(textValue, labelPaintTab[position]
