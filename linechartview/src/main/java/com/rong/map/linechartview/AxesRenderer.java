@@ -627,7 +627,7 @@ public class AxesRenderer {
             float translateY;
             if (isAxisVertical) {
                 labelY = rawValuesTab[position][valueToDrawIndex];
-                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX, labelY,
+                canvas.drawText(labelBuffer, labelBuffer.length - charsNumber, charsNumber, labelX - 5, labelY,
                         labelPaintTab[position]);
             } else {
                 labelX = rawValuesTab[position][valueToDrawIndex];

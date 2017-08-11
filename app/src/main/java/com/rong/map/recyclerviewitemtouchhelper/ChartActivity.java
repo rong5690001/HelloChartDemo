@@ -2,13 +2,11 @@ package com.rong.map.recyclerviewitemtouchhelper;
 
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
 import com.rong.map.linechartview.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +73,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         data.setValueLabelBackgroundColor(Color.TRANSPARENT);
         data.setValueLabelBackgroundAuto(false);
         data.setValueLabelsTextColor(Color.parseColor("#3b3b3b"));
+        data.setValueLabelTypeface(Typeface.DEFAULT);
         data.setLines(lines);
         List<AxisValue> axisValuesX = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
@@ -91,7 +90,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
 ////            axisValue.setLabel(y[i]);
 //            axisValuesY.add(axisValue);
 //        }
-        Axis axisY = Axis.generateAxisFromRange(20f, 100f, 10f)
+        Axis axisY = Axis.generateAxisFromRange(20f, 100f, 13f)
 //        Axis axisY = new Axis(axisValuesY)
                 .setHasLines(true)
                 .setLineColor(Color.BLACK)

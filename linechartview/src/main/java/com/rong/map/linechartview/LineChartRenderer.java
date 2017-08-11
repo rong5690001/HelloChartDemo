@@ -383,7 +383,11 @@ public class LineChartRenderer extends AbstractChartRenderer {
                 // instead of viewport to avoid some
                 // float rounding problems.
                 if (MODE_DRAW == mode) {
-                    drawPoint(canvas, line, pointValue, rawX, rawY, pointRadius);
+                    if (selectedValue.getSecondIndex() == line.getValues().indexOf(pointValue)) {
+//                        highlightPoint(canvas, line, pointValue, rawX, rawY, lineIndex, valueIndex);
+                    } else {
+                        drawPoint(canvas, line, pointValue, rawX, rawY, pointRadius);
+                    }
                     if (line.hasLabels()) {
                         drawLabel(canvas, line, pointValue, rawX, rawY, pointRadius + labelOffset);
                     }
@@ -403,13 +407,13 @@ public class LineChartRenderer extends AbstractChartRenderer {
             canvas.drawRect(rawX - pointRadius, rawY - pointRadius, rawX + pointRadius, rawY + pointRadius,
                     pointPaint);
         } else if (ValueShape.CIRCLE.equals(line.getShape())) {
-            if(line.isPointBitmap()){//点是图片
+            if (line.isPointBitmap()) {//点是图片
                 //TODO
                 Bitmap pointBitmap = ChartUtils.getResBitmap(resources
                         , R.drawable.icn_point
-                        , (int) pointRadius * 2
-                        , (int) pointRadius * 2);
-                canvas.drawBitmap(pointBitmap, rawX - pointRadius, rawY - pointRadius, pointPaint);
+                        , (int) pointRadius * 4
+                        , (int) pointRadius * 4);
+                canvas.drawBitmap(pointBitmap, rawX - 2 * pointRadius, rawY - 2 * pointRadius, pointPaint);
             } else {
                 canvas.drawCircle(rawX, rawY, pointRadius, pointPaint);
             }
@@ -435,7 +439,7 @@ public class LineChartRenderer extends AbstractChartRenderer {
         if (selectedValue.getFirstIndex() == lineIndex && selectedValue.getSecondIndex() == valueIndex) {
             int pointRadius = ChartUtils.dp2px(density, line.getPointRadius());
             pointPaint.setColor(line.getDarkenColor());
-            if(line.isPointBitmap()){//点作为图片
+            if (line.isPointBitmap()) {//点作为图片
                 //TODO
                 Bitmap pointBitmap = ChartUtils.getResBitmap(resources
                         , R.drawable.icn_recent_point
