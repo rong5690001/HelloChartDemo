@@ -33,7 +33,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         v.left = 0;
         v.right = 24;
         v.bottom = 30;
-        v.top = 100;
+        v.top = 200;
         mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);
         mChart.setViewportCalculationEnabled(false);//注意要固定坐標，這個一定要設置
@@ -90,7 +90,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
 ////            axisValue.setLabel(y[i]);
 //            axisValuesY.add(axisValue);
 //        }
-        Axis axisY = Axis.generateAxisFromRange(20f, 100f, 13f)
+        Axis axisY = Axis.generateAxisFromRange(100f, 200f, 10f)
 //        Axis axisY = new Axis(axisValuesY)
                 .setHasLines(true)
                 .setLineColor(Color.BLACK)
@@ -107,7 +107,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         v.left = 18;
         v.right = 24;
         v.bottom = 25;
-        v.top = 100;
+        v.top = 200;
 //                        mChart.setMaximumViewport(v);
         mChart.setCurrentViewport(v);
         mChart.selectValue(new SelectedValue(0
